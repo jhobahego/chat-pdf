@@ -1,0 +1,18 @@
+---
+import astroLogo from '../assets/astro.svg';
+import background from '../assets/background.svg';
+import App from './App.svelte';
+---
+
+<div id="container">
+	<main class="grid place-content-center min-h-screen w-screen">
+		<h1 class="text-3xl md:text-6xl opacity-70 font-bold text-center mb-7 md:mb-10">Chat with your PDF</h1>
+		<section class="container w-[90%] max-w-xl h-64 mx-auto">
+			<App client:idle />
+		</section>
+	</main>
+</div>
+
+<style>
+	
+</style>

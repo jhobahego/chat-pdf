@@ -63,10 +63,10 @@ export const GET: APIRoute = async ({ request }) => {
       
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        sendEvent({ chunk: chunkText });
+        sendEvent(chunkText);
       }
       
-      sendEvent({ done: true });
+      sendEvent('__END__');
     });
 
   } catch (error) {

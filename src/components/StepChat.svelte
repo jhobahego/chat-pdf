@@ -39,9 +39,9 @@
       const eventSource = new EventSource(`/api/ask?${searchParams.toString()}`);
       
       eventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        
-        if (data.done) {
+        const incomingData = JSON.parse(event.data);
+
+        if (incomingData === '__END__') {
           // Add complete assistant message to history
           chatHistory.update(msgs => [...msgs, { role: 'assistant', content: currentAnswer }]);
           eventSource.close();
@@ -49,10 +49,8 @@
           inputValue = '';
           return;
         }
-        
-        if (data.chunk) {
-          currentAnswer += data.chunk;
-        }
+
+        currentAnswer += incomingData;
       };
 
       eventSource.onerror = (error) => {

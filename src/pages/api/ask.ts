@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.0-flash-lite-001';
 
 const responseSSE = (
   { request }: { request: Request },
@@ -54,7 +55,7 @@ export const GET: APIRoute = async ({ request }) => {
     const txt = await readFile(`public/text/${id}.txt`, 'utf-8');
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
 
     const prompt = `Based on this document content: "${txt}", please answer the following question: ${question}. Keep the answer concise and relevant to the document content. **Responde siempre en español.**`;
 

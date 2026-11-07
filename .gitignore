@@ -29,3 +29,6 @@ public/text
 
 # Local Netlify folder
 .netlify
+
+# CodeGraph
+.codegraph/

@@ -1,6 +1,19 @@
 <script>
   import { Button, Input, Label, Spinner } from 'flowbite-svelte';
   import { appStatusInfo, chatHistory, setAppStatusInit } from '../store.ts';
+  import { marked } from 'marked';
+
+  marked.setOptions({
+    breaks: true,
+    gfm: true
+  });
+
+  const renderMarkdown = (text) => {
+    if (!text) return '';
+    // Normalize lists that lack preceding newlines after periods or colons
+    const normalized = text.replace(/([.:])\s+\*\s+(\*\*|[A-Za-z0-9])/g, '$1\n\n* $2');
+    return marked.parse(normalized);
+  };
 
   const { id, url, pages } = $appStatusInfo;
   
@@ -107,14 +120,22 @@
     {#each $chatHistory as message}
       <div class="p-4 rounded-lg" class:bg-gray-100={message.role === 'user'} class:bg-blue-50={message.role === 'assistant'}>
         <p class="font-semibold mb-1">{message.role === 'user' ? 'You' : 'AI'}</p>
-        <p class="text-normal opacity-70 text-pretty">{message.content}</p>
+        {#if message.role === 'assistant'}
+          <div class="markdown-content text-normal opacity-80 text-pretty">
+            {@html renderMarkdown(message.content)}
+          </div>
+        {:else}
+          <p class="text-normal opacity-70 text-pretty">{message.content}</p>
+        {/if}
       </div>
     {/each}
     
     {#if loading && currentAnswer}
       <div class="p-4 rounded-lg bg-blue-50">
         <p class="font-semibold mb-1">AI</p>
-        <p class="text-normal opacity-70 text-pretty">{currentAnswer}</p>
+        <div class="markdown-content text-normal opacity-80 text-pretty">
+          {@html renderMarkdown(currentAnswer)}
+        </div>
       </div>
     {/if}
   </div>
@@ -140,3 +161,72 @@
     </form>
   </div>
 </div>
+
+<style>
+  :global(.markdown-content) {
+    line-height: 1.625;
+  }
+  :global(.markdown-content p) {
+    margin-bottom: 0.75rem;
+  }
+  :global(.markdown-content p:last-child) {
+    margin-bottom: 0;
+  }
+  :global(.markdown-content ul) {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  :global(.markdown-content ol) {
+    list-style-type: decimal;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  :global(.markdown-content li) {
+    margin-bottom: 0.25rem;
+  }
+  :global(.markdown-content strong) {
+    font-weight: 600;
+  }
+  :global(.markdown-content em) {
+    font-style: italic;
+  }
+  :global(.markdown-content code) {
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-family: monospace;
+  }
+  :global(.markdown-content pre) {
+    background-color: #1f2937;
+    color: #f9fafb;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  :global(.markdown-content pre code) {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: 0.875rem;
+  }
+  :global(.markdown-content a) {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+  :global(.markdown-content a:hover) {
+    color: #1d4ed8;
+  }
+  :global(.markdown-content blockquote) {
+    border-left: 3px solid #cbd5e1;
+    padding-left: 0.75rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+</style>

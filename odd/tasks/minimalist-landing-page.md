@@ -31,4 +31,4 @@ Users previously landed directly on the raw upload dropzone without context abou
   - **Allowed edit surfaces:** `src/pages/index.astro`, `src/components/LandingHero.astro`
   - **Acceptance Criteria:** `index.astro` renders a single-viewport minimalist landing page with hero headline, value pillars (no login, no config, no personal data), and the "Subir PDF" CTA leading to `/chat`.
   - **Verification:** `npm run build` succeeds; structural verification of viewport fitting classes and button href.
-  - **Evidence:** Commit pending verification
+  - **Evidence:** Commit `b461539`

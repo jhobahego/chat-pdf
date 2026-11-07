@@ -19,14 +19,16 @@ Users previously landed directly on the raw upload dropzone without context abou
 
 ## Tasks
 
-- [ ] **TASK-01: Establish `/chat` route for the chat & upload application**
+- [x] **TASK-01: Establish `/chat` route for the chat & upload application**
   - **Route:** direct inline
   - **Allowed edit surfaces:** `src/pages/chat.astro`, `src/components/Welcome.astro`
   - **Acceptance Criteria:** Navigating to `/chat` renders the PDF upload and chat workflow seamlessly, with a subtle return link to home.
   - **Verification:** `npm run build` succeeds and `/chat` entrypoint is emitted.
+  - **Evidence:** Commit `91da487`
 
-- [ ] **TASK-02: Design and implement the minimalist landing page on `/`**
+- [x] **TASK-02: Design and implement the minimalist landing page on `/`**
   - **Route:** direct inline
   - **Allowed edit surfaces:** `src/pages/index.astro`, `src/components/LandingHero.astro`
   - **Acceptance Criteria:** `index.astro` renders a single-viewport minimalist landing page with hero headline, value pillars (no login, no config, no personal data), and the "Subir PDF" CTA leading to `/chat`.
   - **Verification:** `npm run build` succeeds; structural verification of viewport fitting classes and button href.
+  - **Evidence:** Commit pending verification

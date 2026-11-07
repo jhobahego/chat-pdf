@@ -33,4 +33,4 @@ Search engines and social sharing platforms require proper metadata, canonical U
   - **Allowed edit surfaces:** `src/layouts/Layout.astro`, `src/pages/index.astro`, `src/pages/chat.astro`, `.gitignore`
   - **Acceptance Criteria:** Proper meta tags, canonical links, social preview cards, and WebApplication JSON-LD schema rendered on both pages.
   - **Verification:** `npm run build` succeeds and emitted HTML contains valid SEO tags.
-  - **Evidence:** Commit pending
+  - **Evidence:** Commit `2e61bf1`

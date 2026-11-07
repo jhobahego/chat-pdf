@@ -9,6 +9,7 @@ import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://jhobadev-chatpdf.netlify.app',
   integrations: [tailwind(), svelte()],
   output: 'server',
   adapter: netlify(),

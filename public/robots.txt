@@ -1,0 +1,6 @@
+# Robots.txt for ChatPDF (https://jhobadev-chatpdf.netlify.app/)
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://jhobadev-chatpdf.netlify.app/sitemap.xml

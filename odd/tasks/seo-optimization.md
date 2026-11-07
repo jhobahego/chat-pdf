@@ -21,14 +21,16 @@ Search engines and social sharing platforms require proper metadata, canonical U
 
 ## Tasks
 
-- [ ] **TASK-01: Technical SEO foundation (`astro.config.mjs`, `robots.txt`, `sitemap.xml`, `og-image.png`)**
+- [x] **TASK-01: Technical SEO foundation (`astro.config.mjs`, `robots.txt`, `sitemap.xml`, `og-image.png`)**
   - **Route:** direct inline
   - **Allowed edit surfaces:** `astro.config.mjs`, `public/robots.txt`, `public/sitemap.xml`, `public/og-image.png`
   - **Acceptance Criteria:** `site` configured, crawler instructions in `robots.txt` disallowing `/api/`, `sitemap.xml` listing canonical pages, and social card image available.
   - **Verification:** Files exist and are properly formatted.
+  - **Evidence:** Commit `0358873`
 
-- [ ] **TASK-02: Metadata, Open Graph, Twitter Cards, and Schema.org JSON-LD in `Layout.astro` and pages**
+- [x] **TASK-02: Metadata, Open Graph, Twitter Cards, and Schema.org JSON-LD in `Layout.astro` and pages**
   - **Route:** direct inline
-  - **Allowed edit surfaces:** `src/layouts/Layout.astro`, `src/pages/index.astro`, `src/pages/chat.astro`
+  - **Allowed edit surfaces:** `src/layouts/Layout.astro`, `src/pages/index.astro`, `src/pages/chat.astro`, `.gitignore`
   - **Acceptance Criteria:** Proper meta tags, canonical links, social preview cards, and WebApplication JSON-LD schema rendered on both pages.
   - **Verification:** `npm run build` succeeds and emitted HTML contains valid SEO tags.
+  - **Evidence:** Commit pending

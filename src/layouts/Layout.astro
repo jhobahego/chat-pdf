@@ -1,26 +1,121 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  image?: string;
+  noindex?: boolean;
+}
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://jhobadev-chatpdf.netlify.app';
+
+const {
+  title = 'ChatPDF — Chateá con tus PDFs con IA, sin registro ni configuraciones',
+  description = 'Subí tu PDF y hacé preguntas al instante para investigar y estudiar. Sin crear cuenta, sin configuraciones previas y sin recopilar tus datos personales.',
+  canonical,
+  ogType = 'website',
+  image = `${siteUrl}/og-image.png`,
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const imageURL = image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      '@id': `${siteUrl}/#webapp`,
+      name: 'ChatPDF',
+      url: `${siteUrl}/`,
+      description: 'Herramienta web para investigar, estudiar y hacer preguntas a documentos PDF con Inteligencia Artificial. Sin registro, sin configuraciones y 100% privado.',
+      applicationCategory: 'EducationalApplication, ProductivityApplication',
+      operatingSystem: 'All',
+      browserRequirements: 'Requires JavaScript. Requires HTML5.',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      featureList: [
+        'Preguntas y respuestas sobre PDFs con IA',
+        'Sin inicio de sesión ni creación de cuenta',
+        'Sin configuración previa',
+        'Cero recopilación de datos personales',
+        'Visualización y análisis rápido de documentos',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
+      name: 'ChatPDF',
+      description: 'Chatea con tus documentos PDF sin registro.',
+      inLanguage: 'es',
+    },
+  ],
+};
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>ChatPDF</title>
-	</head>
-	<body>
-		<div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
-			<div class="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]">
-			</div>
-		</div>
-		<slot />
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="chat pdf, chatear con pdf, preguntar a pdf, estudiar con pdf, ia pdf, chatpdf espanol, sin registro, sin login, analisis de documentos pdf" />
+    <meta name="author" content="jhobadev" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content="ChatPDF" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:secure_url" content={imageURL} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ChatPDF — Chatea con tus PDFs con IA sin registro" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image:alt" content="ChatPDF — Chatea con tus PDFs con IA sin registro" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
+      <div class="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]">
+      </div>
+    </div>
+    <slot />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
